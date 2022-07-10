@@ -28,8 +28,8 @@ function App() {
       </p>
       {/* Kiểm tra path xem có cái nào match đưuọc với path hiện tại hay không thì hiện ra nhưng chỉ một Route */}
       <Switch>
-        <Route path="/" component={TodoFeature} />
-        <Route path="/todos" component={TodoFeature} />
+        <Route path="/" component={TodoFeature} exact />
+        {/* <Route path="/todos" component={TodoFeature} /> */}
         <Route path="/albums" component={AlbumFeature} />
       </Switch>
       Footer
