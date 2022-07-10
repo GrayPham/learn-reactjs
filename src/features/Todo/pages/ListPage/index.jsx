@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import TodoList from "../../components/TodoList";
-
+import { useLocation } from "react-router-dom";
+import queryString from "query-string";
 ListPage.propTypes = {};
 
 function ListPage(props) {
@@ -22,14 +23,24 @@ function ListPage(props) {
       status: "new",
     },
   ];
+  //Get in4 cua location object
+  const location = useLocation();
   // chuyen todoList thanh state
   const [todoList, setToDoList] = useState(initTodoList);
-  const [filteredStatus, setFilteredStatus] = useState("all");
+  const [filteredStatus, setFilteredStatus] = useState(() => {
+    // Sử dụng phần search --- phần sau dẫu ? của Url
+
+    // sử dụng queryString để parse Url
+    const parrams = queryString.parse(location.search);
+    //console.log(parrams);
+
+    return parrams.status || "all";
+  });
 
   const handleTodoClick = (todo, idx) => {
     // clone current array to do new one
     const newTodoList = [...todoList];
-    console.log(todo, idx);
+    //console.log(todo, idx);
 
     // toggle state
     newTodoList[idx] = {
