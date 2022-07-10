@@ -1,69 +1,25 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import TodoList from "./components/TodoList";
+import { Route, Switch, useRouteMatch } from "react-router-dom";
+import DetailPage from "./pages/DetailPage";
+import ListPage from "./pages/ListPage";
+import NotFound from "../../components/NotFound";
 
 TodoFeature.propTypes = {};
 
 function TodoFeature(props) {
-  const initTodoList = [
-    {
-      id: 1,
-      title: "Eat",
-      status: "new",
-    },
-    {
-      id: 2,
-      title: "Sleep",
-      status: "completed",
-    },
-    {
-      id: 3,
-      title: "Code",
-      status: "new",
-    },
-  ];
-  // chuyen todoList thanh state
-  const [todoList, setToDoList] = useState(initTodoList);
-  const [filteredStatus, setFilteredStatus] = useState("all");
-
-  const handleTodoClick = (todo, idx) => {
-    // clone current array to do new one
-    const newTodoList = [...todoList];
-    console.log(todo, idx);
-
-    // toggle state
-    newTodoList[idx] = {
-      ...newTodoList[idx],
-      status: newTodoList[idx].status === "new" ? "completed" : "new",
-    };
-
-    //update todo
-    setToDoList(newTodoList);
-  };
-
-  const handleShowAllClick = () => {
-    setFilteredStatus("all");
-  };
-  const handleShowCompletedClick = () => {
-    setFilteredStatus("completed");
-  };
-  const handleShowNewClick = () => {
-    setFilteredStatus("new");
-  };
-  const renderedTodoList = todoList.filter(
-    (todo) => filteredStatus === "all" || filteredStatus === todo.status
-  );
-  //console.log(renderedTodoList);
+  //Sử dụng một hook
+  const match = useRouteMatch(); // Hạn chế việc thay đổi và lặp lại cũng như tận dụng nhận được Url từ componet cha gửi về
   return (
     <div>
-      <h3>Todo List</h3>
-      {/* Goi ham handle  */}
-      <TodoList todoList={renderedTodoList} onTodoClick={handleTodoClick} />
-      <div>
-        <button onClick={handleShowAllClick}>ShowAll</button>
-        <button onClick={handleShowCompletedClick}>Show Completed</button>
-        <button onClick={handleShowNewClick}>Show New</button>
-      </div>
+      Todo Share UI
+      <Switch>
+        <Route path={match.path} component={ListPage} exact />
+        <Route path={`${match.path}/:todoId`} component={DetailPage} />
+
+        <Route component={NotFound} />
+      </Switch>
     </div>
   );
 }
