@@ -4,7 +4,7 @@ import React from "react";
 
 import AlbumFeature from "./features/Album";
 import TodoFeature from "./features/Todo";
-import { Route, Link, NavLink, Switch } from "react-router-dom";
+import { Route, Link, NavLink, Switch, Redirect } from "react-router-dom";
 
 function App() {
   return (
@@ -28,6 +28,9 @@ function App() {
       </p>
       {/* Kiểm tra path xem có cái nào match đưuọc với path hiện tại hay không thì hiện ra nhưng chỉ một Route */}
       <Switch>
+        {/* Điều hướng và ẩn link Url */}
+        <Redirect from="/home" to="/"></Redirect>
+
         <Route path="/" component={TodoFeature} exact />
         {/* <Route path="/todos" component={TodoFeature} /> */}
         <Route path="/albums" component={AlbumFeature} />
