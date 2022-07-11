@@ -1,13 +1,25 @@
 import logo from "./logo.svg";
 //import "./App.css";
-import React from "react";
+import React, { useEffect } from "react";
 
 import AlbumFeature from "./features/Album";
 import TodoFeature from "./features/Todo";
 import { Route, Link, NavLink, Switch, Redirect } from "react-router-dom";
 import NotFound from "./components/NotFound";
+import productAPI from "./api/productAPI";
 
 function App() {
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const params = {
+        _limit: 10, // lay gioi han 10 product
+      };
+      const productList = await productAPI.getAll(params);
+      console.log(productList);
+    };
+
+    fetchProducts();
+  }, []);
   return (
     <div className="App">
       Header
