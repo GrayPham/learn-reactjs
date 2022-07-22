@@ -7,6 +7,7 @@ import TodoFeature from "./features/Todo";
 import { Route, Link, NavLink, Switch, Redirect } from "react-router-dom";
 import NotFound from "./components/NotFound";
 import productAPI from "./api/productAPI";
+import CounterFeatures from "./features/Counter";
 
 function App() {
   useEffect(() => {
@@ -44,7 +45,7 @@ function App() {
         {/* Điều hướng và ẩn link Url */}
         <Redirect from="/home" to="/"></Redirect>
 
-        <Route path="/" component={TodoFeature} exact />
+        <Route path="/" component={CounterFeatures} exact />
         <Route path="/todo-list" component={TodoFeature} />
         <Route path="/albums" component={AlbumFeature} />
 
