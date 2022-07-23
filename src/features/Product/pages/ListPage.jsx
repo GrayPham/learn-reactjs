@@ -5,6 +5,7 @@ import { Grid, Container, Box, makeStyles } from "@material-ui/core";
 import { Paper, Typography } from "@mui/material";
 import productAPI from "../../../api/productAPI";
 import ProductSkeletonList from "../components/ProductSkeletonList";
+import ProductList from "../components/ProductList";
 
 ListPage.propTypes = {};
 const useStyles = makeStyles((theme) => ({
@@ -13,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     width: "190px",
   },
   right: {
-    flex: "1 1 auto",
+    flex: "1 1 0",
   },
 }));
 function ListPage(props) {
@@ -23,14 +24,14 @@ function ListPage(props) {
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await productAPI.getAll({ _page: 1, _limit: 10 });
+        const { data } = await productAPI.getAll({ _page: 1, _limit: 12 });
 
         setProductList(data);
       } catch (error) {
         console.log("Fail to fetch product list: ", error);
       }
 
-      //setLoading(false);
+      setLoading(false);
     })();
   }, []);
   return (
@@ -45,7 +46,7 @@ function ListPage(props) {
               {Loading ? (
                 <ProductSkeletonList />
               ) : (
-                <Typography>Product List</Typography>
+                <ProductList data={productList} />
               )}
             </Paper>
           </Grid>
